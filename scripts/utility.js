@@ -13,7 +13,6 @@ function addBGColorById(elementId){
     element.classList.add('bg-orange-400');
 }
 
-
 function getRandomAlphabet(){
     // alphabet string
     const alphabetString = 'abcdefghijklmnopqrstuvwxyz';
