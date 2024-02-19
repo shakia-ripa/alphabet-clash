@@ -20,12 +20,12 @@ function endGame() {
     setInnerTextById('final-score', finalScore)
 }
 
-function resetScoreLife(){
+function resetScoreLife() {
     setInnerTextById('current-life', 5);
     setInnerTextById('current-score', 0);
 }
 
-function playAgain(){
+function playAgain() {
     hideElementById('score');
     showElementById('play-ground');
     resetScoreLife();
@@ -40,7 +40,7 @@ function handleKeyboardKeyUpEvent(event) {
     const currentAlphabet = getInnerTextById('alphabet');
     const expectedAlphabet = currentAlphabet.toLowerCase();
 
-    if(playerPressed === 'Escape'){
+    if (playerPressed === 'Escape') {
         endGame();
     }
 
@@ -58,12 +58,6 @@ function handleKeyboardKeyUpEvent(event) {
         continueGame();
     }
     else {
-        console.log("you lost a life");
-        const pressed = document.getElementById(playerPressed);
-        console.log(pressed);
-        pressed.classList.add('bg-red-600')
-        
-
         const currentLifeText = getInnerTextById('current-life');
         const currentLife = parseInt(currentLifeText);
         const newLife = currentLife - 1;
