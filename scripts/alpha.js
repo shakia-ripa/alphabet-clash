@@ -1,3 +1,8 @@
+function play() {
+    hideElementById('home');
+    showElementById('play-ground');
+    continueGame();
+}
 
 function continueGame() {
     const alphabet = getRandomAlphabet();
@@ -8,29 +13,66 @@ function continueGame() {
     addBGColorById(alphabet);
 }
 
+function endGame() {
+    hideElementById('play-ground');
+    showElementById('score');
+    const finalScore = getInnerTextById('current-score')
+    setInnerTextById('final-score', finalScore)
+}
+
+function resetScoreLife(){
+    setInnerTextById('current-life', 5);
+    setInnerTextById('current-score', 0);
+}
+
+function playAgain(){
+    hideElementById('score');
+    showElementById('play-ground');
+    resetScoreLife();
+    continueGame();
+}
+
 function handleKeyboardKeyUpEvent(event) {
     const playerPressed = event.key;
 
     // expected to press
-    const currentAlphabetElement = document.getElementById('alphabet');
-    const currentAlphabet = currentAlphabetElement.innerText;
+    const currentAlphabet = getInnerTextById('alphabet');
     const expectedAlphabet = currentAlphabet.toLowerCase();
-    console.log("Player Pressed", playerPressed, "Expected", expectedAlphabet);
 
     // check matched or not
     if (playerPressed === expectedAlphabet) {
-        console.log("You got a point");
+        // update score
+        const currentScoreText = getInnerTextById('current-score');
+        const currentScore = parseInt(currentScoreText);
+        const newScore = currentScore + 1;
+        console.log(newScore);
+        setInnerTextById('current-score', newScore)
+
+        // Start a new round
+        removeBGColorById(playerPressed);
+        continueGame();
     }
-    else{
+    else {
         console.log("you lost a life");
+        const currentLifeText = getInnerTextById('current-life');
+        const currentLife = parseInt(currentLifeText);
+        const newLife = currentLife - 1;
+        console.log(newLife);
+        if (newLife > 0) {
+            setInnerTextById('current-life', newLife)
+
+            // Start a new round
+            removeBGColorById(expectedAlphabet);
+            continueGame();
+        }
+        else {
+            removeBGColorById(expectedAlphabet);
+            endGame();
+        }
+
     }
 }
 
 // capture keyboard keypress
 document.addEventListener('keyup', handleKeyboardKeyUpEvent);
 
-function play() {
-    hideElementById('home');
-    showElementById('play-ground');
-    continueGame();
-}
